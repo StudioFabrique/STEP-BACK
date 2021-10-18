@@ -1,0 +1,108 @@
+<div class="row w-100 body-sideNav">
+    <nav class="navbar-ang ">
+        <a routerLink="/">
+            <img src="assets/img/logo_white.png" width="150px" alt="" routerLink='accueil'>
+        </a>	
+        <ul *ngIf="innerWidth < 1000" class="nav-menu-ang pt-5">
+            <li class="nav-item-ang mt-3" *ngFor="let li of mobilMenu">
+                <a  class="nav-link-ang "
+                    style="font-size: 16px;" 
+                    routerLink={{li.link}} 
+                    routerLinkActive={{li.class}} 
+                    (click)="closeMenu()">
+                    {{li.title}}
+                </a>
+                <mat-divider class="bg-light"></mat-divider>
+            </li>
+        </ul>
+        
+
+        <ul  class="nav-menu-ang pl-3" *ngFor="let uls of leftMenu">
+            <h2 class="mt-5">{{uls.category}}</h2>
+            <li class="nav-item-ang" *ngFor="let li of uls.ul">
+                <a  
+                    class="nav-link-ang "
+                    style="font-size: 16px;" 
+                    routerLink={{li.link}} 
+                    routerLinkActive={{li.class}} 
+                    (click)="closeMenu()">
+                    {{li.title}}
+                </a>
+            </li>
+        </ul>
+
+        <ul  class="nav-menu-ang pl-3">
+            <h2 class="mt-5">Custom component</h2>
+            <li class="nav-item-ang" *ngFor="let li of models">
+                <a  
+                    class="nav-link-ang "
+                    style="font-size: 16px;" 
+                    
+                    (click)="closeMenu()">
+                    {{li['title']}}
+                </a>
+            </li>
+        </ul>
+
+        <div class="hamburger" (click)="mobileMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+    </nav>
+    
+
+    <div class="content p-2 " >
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="side-right" >
+        <!--<div class="right-menu" *ngFor="let rightMenu of rightMenus">
+            <a routerLink="{{rightMenu.link}}"><mat-icon matTooltip="{{rightMenu.title}}">{{rightMenu.icon}}</mat-icon></a>
+        </div>-->
+        <div class="right-menu">
+            <a routerLink="model" 
+                style="cursor: pointer;">
+                <mat-icon matTooltip="Type de contenu">dashboard</mat-icon>
+            </a>
+        </div>
+        <div class="right-menu">
+            <a routerLink="users" 
+                style="cursor: pointer;">
+                <mat-icon matTooltip="users">person</mat-icon>
+            </a>
+        </div>
+        <div class="right-menu">
+            <a routerLink="menu" 
+                style="cursor: pointer;">
+                <mat-icon matTooltip="Menu">list</mat-icon>
+            </a>
+        </div>
+        <div class="right-menu">
+            <a routerLink="media" 
+                style="cursor: pointer;">
+                <mat-icon matTooltip="Media">perm_media</mat-icon>
+            </a>
+        </div>
+        <div class="right-menu" *ngIf="role === 'admin'">
+            <a routerLink="user" 
+                style="cursor: pointer;">
+                <mat-icon matTooltip="User">person</mat-icon>
+            </a>
+        </div>
+        <div class="right-menu">
+            <a routerLink="user" 
+                style="cursor: pointer;">
+                <mat-icon matTooltip="Paramètres">tune</mat-icon>
+            </a>
+        </div>
+        <div class="right-menu">
+            <a (click)="logout()" 
+                style="cursor: pointer;">
+                <mat-icon matTooltip="Déconnexion">logout</mat-icon>
+            </a>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,69 @@
+<div style="margin:5%;">
+    <h1 class="mb-3">Articles</h1>
+    <mat-divider class="w-100 mb-3"></mat-divider>
+
+    <div class="row align-items-center">
+        <div class="col-lg-5 col-md-5 mb-2" >
+            <mat-form-field class="w-75 mt-3">
+                <mat-label>Choose category</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let category of categories" [value]="category.name">{{category.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-lg-5 col-md-5 mb-2">
+            <mat-form-field class="w-75 mt-3">
+                <mat-label>Choose tag</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-lg-2 col-md-2 mb-2 ">
+            <button mat-raised-button color="primary" 
+                    matTooltip="nouvel article" 
+                    routerLink="/articles/template">
+                <mat-icon style="font-weight:bolder">add</mat-icon>
+            </button>
+        </div>
+    </div>
+    
+    <div *ngIf="articles.length===0" class="spinner"></div>
+    <div class="row" >
+        <div class="articles" *ngFor="let article of articles; let i=index" [ngClass]="{'article100':articles.length % 2 != 0 && i===articles.length-1} ">
+            <div class="row ar w-100" >
+                <div class="col-xl-6 col-lg-12 image" *ngIf="article.image">
+                    <img src="https://step-s3.s3.amazonaws.com/{{article.image}}"  alt="">
+                </div>
+                
+                <div [ngClass]="{'col-xl-6 col-lg-12 ': article.image, 'col-xl-12': !article.image}">
+                    <h3>{{article.title | slice:0:50 }}...</h3>
+                    <h5>{{article.content | slice:0:100}}...</h5>
+                </div>
+                <div class="row action mt-3">
+                    <mat-icon class="text-success mb-2 mr-3" matTooltip="modifier" (click)="modifyArticle(article.id)">edit</mat-icon>
+                    <mat-icon color="primar" class=" mb-2 mr-3" matTooltip="afficher" (click)="displayArticle(article.id,article.template)">visibility</mat-icon>
+                    <mat-icon color="accent" matTooltip="supprimer" (click)="deleteArticle(article.id,article.image,article.title,$event)">clear</mat-icon>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <div *ngIf="displayAlert" class="{{msg.class}} msg row" [style.top]="top">
+        <div class="col-10">
+            <h3>{{msg.text}}</h3>
+        </div>
+        <div class="col-2">
+            <button *ngIf="deleteAlert" mat-button (click)="confirmDelete($event)">
+                <mat-icon>done</mat-icon>
+            </button>
+            
+            <button mat-button (click)="closeAlert()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
